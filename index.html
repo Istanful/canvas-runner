@@ -47,15 +47,15 @@
           this.columnCount = columnCount;
         }
 
-        draw(x, y, time) {
+        draw(position, time) {
           Drawer.ctx.drawImage(
             this.spriteSheet.image,
             this.frameWidth * this.frameIndex(time),
             0,
             this.frameWidth,
             this.frameHeight,
-            0,
-            0,
+            position.x,
+            position.y,
             this.frameWidth,
             this.frameHeight,
           )
@@ -120,10 +120,32 @@
           const image = new Graphic('assets/character.png');
           image.load();
           this.animation = new SpriteAnimation(5, image, 14);
+          this.position = new Vector(0, 0);
+        }
+
+        update(time) {
+          this.position = this.position.add(
+            new Vector(2, 0)
+          )
+          super.update(time);
         }
 
         draw(time) {
-          this.animation.draw(0, 0, time)
+          this.animation.draw(this.position, time)
+        }
+      }
+
+      class Vector {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+        }
+
+        add(other) {
+          return new Vector(
+            this.x + other.x,
+            this.y + other.y
+          );
         }
       }
 
@@ -133,7 +155,7 @@
 
       setInterval(() => {
         game.update();
-      }, 70)
+      }, 16)
     </script>
   </body>
 </html>
