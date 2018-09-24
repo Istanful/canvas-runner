@@ -5,13 +5,13 @@ class Game {
 
   update() {
     Drawer.clear();
+    this.previousTime = this.currentTime || Time.current;
+    this.currentTime = Time.current;
+    this.deltaTime = this.currentTime - this.previousTime;
     this.gameObjects.forEach((gameObject) => {
-      return gameObject.update(this.currentTime)
+      return gameObject.update(this.deltaTime)
     });
-  }
-
-  get currentTime() {
-    return new Date().getTime()
+    this.previousTime = this.currentTime;
   }
 }
 

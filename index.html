@@ -15,6 +15,8 @@
     <script src="src/renderer.js"></script>
     <script src="src/character.js"></script>
     <script src="src/vector.js"></script>
+    <script src="src/body.js"></script>
+    <script src="src/physic.js"></script>
   </head>
   <body>
     <canvas id="canvas"></canvas>
@@ -23,6 +25,7 @@
       const character = new Character('test');
       character.instantiate(game);
 
+character.jump();
       setInterval(() => {
         game.update();
       }, 16)
