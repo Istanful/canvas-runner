@@ -4,10 +4,6 @@ class SpriteSheet {
     this.columnCount = columnCount;
   }
 
-  frameAt(time) {
-    return this.getFrame(this.frameIndex(time));
-  }
-
   getFrame(index) {
     const canvas = document.createElement('canvas')
     canvas.width = this.frameWidth;
@@ -32,15 +28,5 @@ class SpriteSheet {
 
   get frameHeight() {
     return this.graphic.image.height;
-  }
-
-  get frameDuration() {
-    return 1000 / 14;
-  }
-
-  frameIndex(time) {
-    return Math.floor(
-      (time / this.frameDuration) % (this.columnCount)
-    );
   }
 }

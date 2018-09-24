@@ -5,13 +5,13 @@ class SpriteAnimation extends Animation {
     this.framesPerSecond = framesPerSecond;
   }
 
-  nextValue(time) {
-    return this.spriteSheet.getFrame(this.frameIndex(time));
+  nextValue(deltaTime) {
+    return this.spriteSheet.getFrame(this.frameIndex());
   }
 
-  frameIndex(time) {
+  frameIndex() {
     return Math.floor(
-      (time / this.frameDuration) % (this.spriteSheet.columnCount)
+      (Time.current / this.frameDuration) % (this.spriteSheet.columnCount)
     );
   }
 

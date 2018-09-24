@@ -1,24 +1,14 @@
-class Renderer extends Animation {
-  constructor(gameObject) {
-    super();
+class Renderer {
+  constructor(gameObject, graphic) {
     this.gameObject = gameObject;
+    this.graphic = graphic;
   }
 
-  draw(position, time) {
+  draw(position) {
     Drawer.ctx.drawImage(
-      this.gameObject.graphic(time),
+      this.graphic,
       position.x,
       position.y
     );
-  }
-
-  frameIndex(time) {
-    return Math.floor(
-      (time / this.frameDuration) % (this.columnCount)
-    );
-  }
-
-  get frameDuration() {
-    return 1000 / this.framesPerSecond;
   }
 }

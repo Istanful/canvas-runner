@@ -3,11 +3,11 @@ class GameObject {
     this.name = name;
   }
 
-  update(time) {
-    this.draw(time);
+  update() {
+    this.draw();
   }
 
-  draw(time) {
+  draw() {
   }
 
   instantiate(game) {
