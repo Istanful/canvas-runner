@@ -13,7 +13,13 @@
         }
 
         update() {
-          this.gameObjects.forEach((gameObject) => gameObject.update());
+          this.gameObjects.forEach((gameObject) => {
+            return gameObject.update(this.currentTime)
+          });
+        }
+
+        get currentTime() {
+          return new Date().getTime()
         }
       }
 
@@ -22,7 +28,7 @@
           this.name = name;
         }
 
-        update() {
+        update(time) {
           this.draw();
         }
 
