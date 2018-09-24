@@ -7,11 +7,11 @@
   </head>
   <body>
     <canvas id="canvas"></canvas>
-
     <script>
       class Graphic {
         constructor(path) {
           this.path = path;
+          this.load();
         }
 
         load() {
@@ -40,39 +40,20 @@
       }
 
       class SpriteAnimation extends Animation {
-        constructor(columnCount, spriteSheet, framesPerSecond) {
+        constructor(spriteSheet, framesPerSecond) {
           super();
-          this.framesPerSecond = framesPerSecond;
           this.spriteSheet = spriteSheet;
-          this.columnCount = columnCount;
+          this.framesPerSecond = framesPerSecond;
         }
 
-        draw(position, time) {
-          Drawer.ctx.drawImage(
-            this.spriteSheet.image,
-            this.frameWidth * this.frameIndex(time),
-            0,
-            this.frameWidth,
-            this.frameHeight,
-            position.x,
-            position.y,
-            this.frameWidth,
-            this.frameHeight,
-          )
+        nextValue(time) {
+          return this.spriteSheet.getFrame(this.frameIndex(time));
         }
 
         frameIndex(time) {
           return Math.floor(
-            (time / this.frameDuration) % (this.columnCount)
+            (time / this.frameDuration) % (this.spriteSheet.columnCount)
           );
-        }
-
-        get frameWidth() {
-          return this.spriteSheet.image.width / this.columnCount;
-        }
-
-        get frameHeight() {
-          return this.spriteSheet.image.height;
         }
 
         get frameDuration() {
@@ -114,24 +95,98 @@
         }
       }
 
+      class SpriteSheet {
+        constructor(graphic, columnCount) {
+          this.graphic = graphic;
+          this.columnCount = columnCount;
+        }
+
+        frameAt(time) {
+          return this.getFrame(this.frameIndex(time));
+        }
+
+        getFrame(index) {
+          const canvas = document.createElement('canvas')
+          canvas.width = this.frameWidth;
+          canvas.height = this.frameHeight;
+          canvas.getContext('2d').drawImage(
+            this.graphic.image,
+            this.frameWidth * index,
+            0,
+            this.frameWidth,
+            this.frameHeight,
+            0,
+            0,
+            this.frameWidth,
+            this.frameHeight,
+          );
+          return canvas;
+        }
+
+        get frameWidth() {
+          return this.graphic.image.width / this.columnCount;
+        }
+
+        get frameHeight() {
+          return this.graphic.image.height;
+        }
+
+        get frameDuration() {
+          return 1000 / 14;
+        }
+
+        frameIndex(time) {
+          return Math.floor(
+            (time / this.frameDuration) % (this.columnCount)
+          );
+        }
+      }
+
+      class Renderer extends Animation {
+        constructor(gameObject) {
+          super();
+          this.gameObject = gameObject;
+        }
+
+        draw(position, time) {
+          Drawer.ctx.drawImage(
+            this.gameObject.graphic(time),
+            position.x,
+            position.y
+          );
+        }
+
+        frameIndex(time) {
+          return Math.floor(
+            (time / this.frameDuration) % (this.columnCount)
+          );
+        }
+
+        get frameDuration() {
+          return 1000 / this.framesPerSecond;
+        }
+      }
+
       class Character extends GameObject {
         constructor(name) {
           super(name);
-          const image = new Graphic('assets/character.png');
-          image.load();
-          this.animation = new SpriteAnimation(5, image, 14);
+          const graphic = new Graphic('assets/character.png');
+          this.animation = new SpriteAnimation(new SpriteSheet(graphic, 5), 14)
+          this.renderer = new Renderer(this);
           this.position = new Vector(0, 0);
         }
 
         update(time) {
-          this.position = this.position.add(
-            new Vector(2, 0)
-          )
+          this.position = this.position.add(new Vector(2, 0));
           super.update(time);
         }
 
         draw(time) {
-          this.animation.draw(this.position, time)
+          this.renderer.draw(this.position, time)
+        }
+
+        graphic(time) {
+          return this.animation.nextValue(time);
         }
       }
 
