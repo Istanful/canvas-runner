@@ -6,13 +6,87 @@
     <title></title>
   </head>
   <body>
+    <canvas id="canvas"></canvas>
+
     <script>
+      class Graphic {
+        constructor(path) {
+          this.path = path;
+        }
+
+        load() {
+          this.image = new Image();
+          this.image.src = this.path;
+        }
+      }
+
+      class Drawer {
+        static get ctx() {
+          return Drawer.canvas.getContext('2d');
+        }
+
+        static get canvas() {
+          return document.getElementById('canvas')
+        }
+
+        static clear() {
+          Drawer.ctx.clearRect(0, 0, Drawer.canvas.width, Drawer.canvas.height);
+        }
+      }
+
+      class Animation {
+        nextValue(time) {
+        }
+      }
+
+      class SpriteAnimation extends Animation {
+        constructor(columnCount, spriteSheet, framesPerSecond) {
+          super();
+          this.framesPerSecond = framesPerSecond;
+          this.spriteSheet = spriteSheet;
+          this.columnCount = columnCount;
+        }
+
+        draw(x, y, time) {
+          Drawer.ctx.drawImage(
+            this.spriteSheet.image,
+            this.frameWidth * this.frameIndex(time),
+            0,
+            this.frameWidth,
+            this.frameHeight,
+            0,
+            0,
+            this.frameWidth,
+            this.frameHeight,
+          )
+        }
+
+        frameIndex(time) {
+          return Math.floor(
+            (time / this.frameDuration) % (this.columnCount)
+          );
+        }
+
+        get frameWidth() {
+          return this.spriteSheet.image.width / this.columnCount;
+        }
+
+        get frameHeight() {
+          return this.spriteSheet.image.height;
+        }
+
+        get frameDuration() {
+          return 1000 / this.framesPerSecond;
+        }
+      }
+
       class Game {
         constructor() {
           this.gameObjects = [];
         }
 
         update() {
+          Drawer.clear();
           this.gameObjects.forEach((gameObject) => {
             return gameObject.update(this.currentTime)
           });
@@ -29,10 +103,10 @@
         }
 
         update(time) {
-          this.draw();
+          this.draw(time);
         }
 
-        draw() {
+        draw(time) {
         }
 
         instantiate(game) {
@@ -40,10 +114,22 @@
         }
       }
 
-      const game = new Game();
-      const exampleGameObject = new GameObject('test');
-      exampleGameObject.instantiate(game);
+      class Character extends GameObject {
+        constructor(name) {
+          super(name);
+          const image = new Graphic('assets/character.png');
+          image.load();
+          this.animation = new SpriteAnimation(5, image, 14);
+        }
 
+        draw(time) {
+          this.animation.draw(0, 0, time)
+        }
+      }
+
+      const game = new Game();
+      const character = new Character('test');
+      character.instantiate(game);
 
       setInterval(() => {
         game.update();
