@@ -10,6 +10,9 @@ class Body {
       this.velocity.x,
       this.velocity.y + this.gravity * (deltaTime / 1000)
     );
-    this.position = this.position.add(this.velocity);
+    this.position = new Vector(
+      this.position.x + this.velocity.x,
+      [this.position.y + this.velocity.y, Drawer.canvas.height - 45].min()
+    )
   }
 }

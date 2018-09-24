@@ -1,5 +1,5 @@
 class Physic {
   static get gravity() {
-    return 15;
+    return 20;
   }
 }

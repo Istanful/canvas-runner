@@ -18,15 +18,18 @@
     <script src="src/vector.js"></script>
     <script src="src/body.js"></script>
     <script src="src/physic.js"></script>
+    <script src="src/keyboard_input.js"></script>
   </head>
+
   <body>
     <canvas id="canvas"></canvas>
     <script defer>
       const game = new Game();
       const character = new Character('test');
       character.instantiate(game);
+      KeyboardInput.on(' ', character.jump.bind(character));
+      KeyboardInput.subscribe();
 
-character.jump();
       setInterval(() => {
         game.update();
       }, 16)
