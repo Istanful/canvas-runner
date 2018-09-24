@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+  </head>
+  <body>
+    <script>
+      class Game {
+        constructor() {
+          this.gameObjects = [];
+        }
+
+        update() {
+          this.gameObjects.forEach((gameObject) => gameObject.update());
+        }
+      }
+
+      class GameObject {
+        constructor(name) {
+          this.name = name;
+        }
+
+        update() {
+          this.draw();
+        }
+
+        draw() {
+        }
+
+        instantiate(game) {
+          game.gameObjects.push(this);
+        }
+      }
+
+      const game = new Game();
+      const exampleGameObject = new GameObject('test');
+      exampleGameObject.instantiate(game);
+
+
+      setInterval(() => {
+        game.update();
+      }, 70)
+    </script>
+  </body>
+</html>
