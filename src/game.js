@@ -1,9 +1,5 @@
 class Game {
-  constructor() {
-    this.gameObjects = [];
-  }
-
-  update() {
+  static update() {
     Drawer.clear();
     this.previousTime = this.currentTime || Time.current;
     this.currentTime = Time.current;
@@ -14,4 +10,4 @@ class Game {
     this.previousTime = this.currentTime;
   }
 }
-
+Game.gameObjects = [];

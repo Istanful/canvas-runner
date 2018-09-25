@@ -24,14 +24,13 @@
   <body>
     <canvas id="canvas"></canvas>
     <script defer>
-      const game = new Game();
       const character = new Character('test');
-      character.instantiate(game);
+      character.instantiate();
       KeyboardInput.on(' ', character.jump.bind(character));
       KeyboardInput.subscribe();
 
       setInterval(() => {
-        game.update();
+        Game.update();
       }, 16)
     </script>
   </body>

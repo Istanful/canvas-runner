@@ -10,7 +10,7 @@ class GameObject {
   draw() {
   }
 
-  instantiate(game) {
-    game.gameObjects.push(this);
+  instantiate() {
+    Game.gameObjects.push(this);
   }
 }
