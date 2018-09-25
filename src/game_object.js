@@ -1,6 +1,7 @@
 class GameObject {
   constructor(name) {
     this.name = name;
+    this.instantiate();
   }
 
   update() {

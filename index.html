@@ -38,9 +38,6 @@
         new Vector(0, Drawer.canvas.height),
         new Vector(Drawer.canvas.width, 50)
       );
-      character.instantiate();
-      obstacle.instantiate();
-      floor.instantiate();
       KeyboardInput.on(' ', character.jump.bind(character));
       KeyboardInput.subscribe();
 
