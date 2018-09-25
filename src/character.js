@@ -1,9 +1,8 @@
 class Character extends GameObject {
   constructor(name) {
     super(name);
-    const graphic = new Graphic('assets/character.png');
-    this.animation = new SpriteAnimation(new SpriteSheet(graphic, 5), 14);
-    this.renderer = new Renderer(this, this.animation.nextValue());
+    this.renderer = new Renderer(this);
+    this.animator = new CharacterAnimator(this);
     this.body = new Body(
       new Vector(0, Drawer.canvas.height - 100),
       new Vector(30, 40)
@@ -11,7 +10,7 @@ class Character extends GameObject {
   }
 
   update(deltaTime) {
-    this.renderer.graphic = this.animation.nextValue();
+    this.graphic = this.animator.animation.nextValue();
     this.body.velocity.x = 2;
     this.body.update(deltaTime);
     this.handleCollision();

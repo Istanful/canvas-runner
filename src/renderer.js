@@ -1,7 +1,10 @@
 class Renderer {
-  constructor(gameObject, graphic) {
+  constructor(gameObject) {
     this.gameObject = gameObject;
-    this.graphic = graphic;
+  }
+
+  get graphic() {
+    return this.gameObject.graphic;
   }
 
   draw(position) {

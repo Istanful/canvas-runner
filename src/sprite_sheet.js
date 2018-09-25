@@ -1,6 +1,6 @@
 class SpriteSheet {
-  constructor(graphic, columnCount) {
-    this.graphic = graphic;
+  constructor(path, columnCount) {
+    this.graphic = new Graphic(path);
     this.columnCount = columnCount;
   }
 
