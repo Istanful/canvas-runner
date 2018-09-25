@@ -7,3 +7,13 @@ Array.prototype.min = function() {
   }
   return min;
 }
+
+Array.prototype.compact = function() {
+  let result = [];
+  for (let i = 0; i < this.length; i++) {
+    if (this[i]) {
+      result.push(this[i]);
+    }
+  }
+  return result;
+}

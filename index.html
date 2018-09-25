@@ -19,13 +19,28 @@
     <script src="src/body.js"></script>
     <script src="src/physic.js"></script>
     <script src="src/keyboard_input.js"></script>
+    <script src="src/hitbox.js"></script>
+    <script src="src/collision.js"></script>
+    <script src="src/obstacle.js"></script>
   </head>
 
   <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" style="border: 2px solid black;"></canvas>
     <script defer>
       const character = new Character('test');
+      const obstacle = new Obstacle(
+        'box',
+        new Vector(100, Drawer.canvas.height - 50),
+        new Vector(100, 50)
+      );
+      const floor = new Obstacle(
+        'floor',
+        new Vector(0, Drawer.canvas.height),
+        new Vector(Drawer.canvas.width, 50)
+      );
       character.instantiate();
+      obstacle.instantiate();
+      floor.instantiate();
       KeyboardInput.on(' ', character.jump.bind(character));
       KeyboardInput.subscribe();
 
