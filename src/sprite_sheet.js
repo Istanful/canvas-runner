@@ -1,10 +1,24 @@
 class SpriteSheet {
   constructor(path, columnCount) {
-    this.graphic = new Graphic(path);
     this.columnCount = columnCount;
+    this.graphic = new Graphic(path);
   }
 
   getFrame(index) {
+    return this.frames[index];
+  }
+
+  get frames() {
+    if (!this._frames) {
+      this._frames = Array.from(
+        new Array(this.columnCount),
+        (_el, i) => this.constructFrame(i)
+      );
+    }
+    return this._frames;
+  }
+
+  constructFrame(index) {
     const canvas = document.createElement('canvas')
     canvas.width = this.frameWidth;
     canvas.height = this.frameHeight;
