@@ -1,59 +1,50 @@
 class Camera extends GameObject {
   constructor(name, subject) {
-    super(name);
+    super(name, subject.position.clone());
     this.drawer = new Drawer('mainCamera');
     this.subject = subject;
-    this.position = new Vector(
-      this.subject.position.x,
-      this.subject.position.y
-    );
-    this.offsetY = 50;
+    this.offsetY = 100;
     this.elasticity = 0.1;
   }
 
   update() {
+    this.drawer.clear();
+    Game.gameObjects.forEach((gameObject) => {
+      if (gameObject.graphic) {
+        const drawPosition = gameObject.position
+                                       .subtract(this.position)
+        this.drawer.ctx.drawImage(
+          gameObject.graphic,
+          drawPosition.x,
+          drawPosition.y
+        );
+      }
+    })
   }
 
   lateUpdate() {
     this.position = new Vector(
-      this.currentX,
-      this.currentY
-    );
-    this.draw();
+      this.nextX,
+      this.nextY
+    )
   }
 
-  get currentX() {
-    return this.subject.position.x;
+  get nextX() {
+    return this.subject.position.x - this.drawer.canvas.width / 2;
+  }
+
+  get nextY() {
+    return this.position.y + this.deltaY * this.elasticity;
   }
 
   get currentY() {
     return this.position.y +
-           (this.subject.position.y - this.position.y) * this.elasticity;
+           this.drawer.canvas.height -
+           this.subject.hitbox.size.y -
+           this.offsetY;
   }
 
-  get offset() {
-    return new Vector(
-      this.drawer.canvas.width / 2 - this.position.x,
-      this.drawer.canvas.height - this.position.y -
-        this.subject.hitbox.size.y -
-        this.offsetY
-    )
-  }
-
-  draw() {
-    this.drawer.ctx.clearRect(
-      0,
-      0,
-      this.drawer.canvas.width,
-      this.drawer.canvas.height
-    );
-
-    this.drawer.ctx.drawImage(
-      Game.drawer.canvas,
-      this.offset.x,
-      this.offset.y,
-      this.drawer.canvas.width,
-      this.drawer.canvas.height
-    );
+  get deltaY() {
+    return this.subject.position.y - this.currentY;
   }
 }

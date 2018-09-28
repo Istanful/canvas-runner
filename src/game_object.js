@@ -6,18 +6,9 @@ class GameObject {
   }
 
   update() {
-    this.draw();
   }
 
   lateUpdate() {
-  }
-
-  draw() {
-    Game.drawer.ctx.drawImage(
-      this.graphic,
-      this.position.x,
-      this.position.y
-    );
   }
 
   instantiate() {

@@ -2,8 +2,8 @@ class Floor extends Obstacle {
   constructor() {
     super(
       'floor',
-      new Vector(0, 450),
-      new Vector(800, 450),
+      new Vector(0, 800),
+      new Vector(900, 450),
     );
   }
 

@@ -8,7 +8,6 @@ class Clock {
 
 class Game {
   static update() {
-    Game.drawer.clear();
     Clock.tick();
 
     this.gameObjects.forEach((gameObject) => {
@@ -21,4 +20,3 @@ class Game {
   }
 }
 Game.gameObjects = [];
-Game.drawer = new Drawer('gameCanvas');

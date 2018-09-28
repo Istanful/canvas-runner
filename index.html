@@ -14,7 +14,6 @@
     <script src="src/game.js"></script>
     <script src="src/game_object.js"></script>
     <script src="src/sprite_sheet.js"></script>
-    <script src="src/renderer.js"></script>
     <script src="src/character.js"></script>
     <script src="src/body.js"></script>
     <script src="src/physic.js"></script>
@@ -37,7 +36,7 @@
       const mainCamera = new Camera('mainCamera', character);
       const obstacle = new Obstacle(
         'box',
-        new Vector(400, 400),
+        new Vector(400, 750),
         new Vector(100, 50)
       );
       const floor = new Floor();

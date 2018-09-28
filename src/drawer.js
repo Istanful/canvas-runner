@@ -17,6 +17,6 @@ class Drawer {
   }
 
   clear() {
-    Game.drawer.ctx.clearRect(0, 0, Game.drawer.canvas.width, Game.drawer.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }
