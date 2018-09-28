@@ -19,21 +19,23 @@ class SpriteSheet {
   }
 
   constructFrame(index) {
-    const canvas = document.createElement('canvas')
-    canvas.width = this.frameWidth;
-    canvas.height = this.frameHeight;
-    canvas.getContext('2d').drawImage(
-      this.graphic.image,
-      this.frameWidth * index,
-      0,
+    return Canvas.build(
       this.frameWidth,
       this.frameHeight,
-      0,
-      0,
-      this.frameWidth,
-      this.frameHeight,
-    );
-    return canvas;
+      (ctx) => {
+        ctx.drawImage(
+          this.graphic.image,
+          this.frameWidth * index,
+          0,
+          this.frameWidth,
+          this.frameHeight,
+          0,
+          0,
+          this.frameWidth,
+          this.frameHeight,
+        );
+      }
+    )
   }
 
   get frameWidth() {
