@@ -1,8 +1,8 @@
 class Canvas {
-  static build(width, height, builder) {
+  static build(size, builder) {
     const canvas = document.createElement('canvas')
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = size.x;
+    canvas.height = size.y;
     builder(canvas.getContext('2d'))
     return canvas;
   }

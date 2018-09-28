@@ -20,8 +20,7 @@ class SpriteSheet {
 
   constructFrame(index) {
     return Canvas.build(
-      this.frameWidth,
-      this.frameHeight,
+      this.frameSize,
       (ctx) => {
         ctx.drawImage(
           this.graphic.image,
@@ -36,6 +35,10 @@ class SpriteSheet {
         );
       }
     )
+  }
+
+  get frameSize() {
+    return new Vector(this.frameWidth, this.frameHeight);
   }
 
   get frameWidth() {

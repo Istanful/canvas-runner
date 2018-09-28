@@ -1,9 +1,8 @@
 class Character extends GameObject {
   constructor(name) {
-    super(name);
+    super(name, new Vector(0, Game.drawer.canvas.height - 100));
     this.renderer = new Renderer(this);
     this.animator = new CharacterAnimator(this);
-    this.position = new Vector(0, Game.drawer.canvas.height - 100);
     this.body = new Body(this);
     this.hitbox = new Hitbox(this, new Vector(30, 40));
   }
