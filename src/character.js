@@ -3,10 +3,8 @@ class Character extends GameObject {
     super(name);
     this.renderer = new Renderer(this);
     this.animator = new CharacterAnimator(this);
-    this.body = new Body(
-      new Vector(0, Game.drawer.canvas.height - 100),
-      new Vector(30, 40)
-    );
+    this.position = new Vector(0, Game.drawer.canvas.height - 100);
+    this.body = new Body(this, new Vector(30, 40));
   }
 
   update(deltaTime) {
@@ -19,7 +17,7 @@ class Character extends GameObject {
   }
 
   draw() {
-    this.renderer.draw(this.body.position);
+    this.renderer.draw(this.position);
   }
 
   jump() {
@@ -31,11 +29,11 @@ class Character extends GameObject {
   land(collision) {
     this.body.velocity.y = 0;
     const otherCorner = collision.otherHitbox.topLeftCorner;
-    this.body.position.y = otherCorner.y - this.body.size.y
+    this.position.y = otherCorner.y - this.body.size.y
   }
 
   runInto(collision) {
-    this.body.position.x = collision.otherHitbox.topLeftCorner.x - this.body.size.x
+    this.position.x = collision.otherHitbox.topLeftCorner.x - this.body.size.x
   }
 
   handleCollision() {
@@ -58,9 +56,5 @@ class Character extends GameObject {
           }
       }
     })
-  }
-
-  get position() {
-    return this.body.position;
   }
 }

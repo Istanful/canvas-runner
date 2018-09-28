@@ -1,14 +1,13 @@
 class Hitbox {
-  constructor(body) {
-    this.body = body;
-    this.disable = false;
+  constructor(gameObject) {
+    this.gameObject = gameObject;
   }
 
   get collisions() {
     return Game.gameObjects.map((gameObject) => {
       if (!gameObject.body) { return; }
       const hitbox = gameObject.body.hitbox;
-      if (Object.is(hitbox, this) || hitbox.disable) { return; }
+      if (Object.is(hitbox, this)) { return; }
       const collision = new Collision(this, gameObject.body.hitbox);
       return new Collision(this, gameObject.body.hitbox);
     }).compact();
@@ -31,22 +30,22 @@ class Hitbox {
   }
 
   get topLeftCorner() {
-    return this.body.position;
+    return this.gameObject.position;
   }
 
   get topRightCorner() {
-    return this.body.position.add(
-      new Vector(this.body.size.x, 0)
+    return this.gameObject.position.add(
+      new Vector(this.gameObject.size.x, 0)
     )
   }
 
   get bottomRightCorner() {
-    return this.body.position.add(this.body.size);
+    return this.gameObject.position.add(this.gameObject.size);
   }
 
   get bottomLeftCorner() {
-    return this.body.position.add(
-      new Vector(0, this.body.size.y)
+    return this.gameObject.position.add(
+      new Vector(0, this.gameObject.size.y)
     )
   }
 }

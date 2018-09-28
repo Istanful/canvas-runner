@@ -23,7 +23,7 @@ class Camera extends GameObject {
   }
 
   get currentX() {
-    return this.subject.body.position.x;
+    return this.subject.position.x;
   }
 
   get currentY() {

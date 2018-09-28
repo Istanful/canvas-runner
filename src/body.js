@@ -1,9 +1,10 @@
 class Body {
-  constructor(position, size) {
-    this.position = position;
+  constructor(gameObject, size) {
+    this.gameObject = gameObject;
     this.velocity = new Vector(0, 0);
     this.size = size;
-    this.hitbox = new Hitbox(this);
+    gameObject.size = size;
+    this.hitbox = new Hitbox(gameObject);
   }
 
   update(deltaTime) {
@@ -12,9 +13,9 @@ class Body {
       this.velocity.y + Physic.gravity * (deltaTime / 1000)
     );
 
-    this.position = new Vector(
-      this.position.x + this.velocity.x,
-      this.position.y + this.velocity.y
+    this.gameObject.position = new Vector(
+      this.gameObject.position.x + this.velocity.x,
+      this.gameObject.position.y + this.velocity.y
     );
   }
 
