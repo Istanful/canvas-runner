@@ -1,4 +1,13 @@
+/**
+ * The animator to use for the main character. Extends the Animator class but
+ * defines no additional behaviour.
+ */
 class CharacterAnimator extends Animator {
+  /**
+   * @constructor
+   * @param {Character} - The character to use when determining the animation
+   *                      states.
+   */
   constructor(character) {
     const fallAnimation = new ProportionSpriteAnimation(
       new SpriteSheet('assets/character_fall.png', 5),
