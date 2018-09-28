@@ -8,7 +8,7 @@ class Renderer {
   }
 
   draw(position) {
-    Drawer.ctx.drawImage(
+    Game.drawer.ctx.drawImage(
       this.graphic,
       position.x,
       position.y

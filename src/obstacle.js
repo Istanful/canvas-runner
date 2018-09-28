@@ -5,7 +5,7 @@ class Obstacle extends GameObject {
   }
 
   draw() {
-    Drawer.ctx.strokeRect(
+    Game.drawer.ctx.strokeRect(
       this.body.position.x,
       this.body.position.y,
       this.body.size.x,

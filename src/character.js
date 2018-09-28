@@ -4,14 +4,15 @@ class Character extends GameObject {
     this.renderer = new Renderer(this);
     this.animator = new CharacterAnimator(this);
     this.body = new Body(
-      new Vector(0, Drawer.canvas.height - 100),
+      new Vector(0, Game.drawer.canvas.height - 100),
       new Vector(30, 40)
     );
   }
 
   update(deltaTime) {
+    this.lastY = this.position.y;
     this.graphic = this.animator.animation.nextValue();
-    this.body.velocity.x = 2;
+    this.body.velocity.x = 4;
     this.body.update(deltaTime);
     this.handleCollision();
     super.update();
@@ -57,5 +58,9 @@ class Character extends GameObject {
           }
       }
     })
+  }
+
+  get position() {
+    return this.body.position;
   }
 }

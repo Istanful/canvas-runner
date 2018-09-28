@@ -1,12 +1,14 @@
 class Hitbox {
   constructor(body) {
     this.body = body;
+    this.disable = false;
   }
 
   get collisions() {
     return Game.gameObjects.map((gameObject) => {
       if (!gameObject.body) { return; }
-      if (Object.is(gameObject.body.hitbox, this)) { return; }
+      const hitbox = gameObject.body.hitbox;
+      if (Object.is(hitbox, this) || hitbox.disable) { return; }
       const collision = new Collision(this, gameObject.body.hitbox);
       return new Collision(this, gameObject.body.hitbox);
     }).compact();

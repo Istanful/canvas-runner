@@ -17,4 +17,11 @@ class Vector {
       this.y - other.y
     );
   }
+
+  clone() {
+    return new Vector(
+      this.x,
+      this.y
+    )
+  }
 }

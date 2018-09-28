@@ -8,6 +8,9 @@ class GameObject {
     this.draw();
   }
 
+  lateUpdate() {
+  }
+
   draw() {
   }
 

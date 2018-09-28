@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title></title>
+    <script src="src/vector.js"></script>
     <script src="src/array.js"></script>
     <script src="src/time.js"></script>
     <script src="src/graphic.js"></script>
@@ -15,7 +16,6 @@
     <script src="src/sprite_sheet.js"></script>
     <script src="src/renderer.js"></script>
     <script src="src/character.js"></script>
-    <script src="src/vector.js"></script>
     <script src="src/body.js"></script>
     <script src="src/physic.js"></script>
     <script src="src/keyboard_input.js"></script>
@@ -25,21 +25,23 @@
     <script src="src/animator.js"></script>
     <script src="src/character_animator.js"></script>
     <script src="src/proportion_sprite_animation.js"></script>
+    <script src="src/camera.js"></script>
   </head>
 
   <body>
-    <canvas id="canvas" width="800px" height="450" style="border: 2px solid black;"></canvas>
+    <canvas id="mainCamera" width="800px" height="450" style="border: 2px solid black;"></canvas>
     <script defer>
       const character = new Character('test');
+      const mainCamera = new Camera('mainCamera', character);
       const obstacle = new Obstacle(
         'box',
-        new Vector(100, Drawer.canvas.height - 50),
+        new Vector(400, 400),
         new Vector(100, 50)
       );
       const floor = new Obstacle(
         'floor',
-        new Vector(0, Drawer.canvas.height),
-        new Vector(Drawer.canvas.width, 50)
+        new Vector(0, 450),
+        new Vector(800, 50)
       );
       KeyboardInput.on(' ', character.jump.bind(character));
       KeyboardInput.subscribe();

@@ -1,13 +1,22 @@
 class Drawer {
-  static get ctx() {
-    return Drawer.canvas.getContext('2d');
+  constructor(id) {
+    this.size = new Vector(800, 450);
+    this.canvas = document.getElementById(id) || this.constructCanvas(id, this.size);
   }
 
-  static get canvas() {
-    return document.getElementById('canvas')
+  constructCanvas(id, size) {
+    const canvas = document.createElement('canvas')
+    canvas.id = id;
+    canvas.width = size.x;
+    canvas.height = size.y;
+    return canvas;
   }
 
-  static clear() {
-    Drawer.ctx.clearRect(0, 0, Drawer.canvas.width, Drawer.canvas.height);
+  get ctx() {
+    return this.canvas.getContext('2d');
+  }
+
+  clear() {
+    Game.drawer.ctx.clearRect(0, 0, Game.drawer.canvas.width, Game.drawer.canvas.height);
   }
 }
