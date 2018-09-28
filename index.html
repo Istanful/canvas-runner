@@ -26,6 +26,8 @@
     <script src="src/character_animator.js"></script>
     <script src="src/proportion_sprite_animation.js"></script>
     <script src="src/camera.js"></script>
+    <script src="src/canvas.js"></script>
+    <script src="src/floor.js"></script>
   </head>
 
   <body>
@@ -38,11 +40,7 @@
         new Vector(400, 400),
         new Vector(100, 50)
       );
-      const floor = new Obstacle(
-        'floor',
-        new Vector(0, 450),
-        new Vector(800, 50)
-      );
+      const floor = new Floor();
       KeyboardInput.on(' ', character.jump.bind(character));
       KeyboardInput.subscribe();
 

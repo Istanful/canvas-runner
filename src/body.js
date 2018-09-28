@@ -1,10 +1,7 @@
 class Body {
-  constructor(gameObject, size) {
+  constructor(gameObject) {
     this.gameObject = gameObject;
     this.velocity = new Vector(0, 0);
-    this.size = size;
-    gameObject.size = size;
-    this.hitbox = new Hitbox(gameObject);
   }
 
   update(deltaTime) {
@@ -17,10 +14,6 @@ class Body {
       this.gameObject.position.x + this.velocity.x,
       this.gameObject.position.y + this.velocity.y
     );
-  }
-
-  get collisions() {
-    return this.hitbox.collisions;
   }
 
   get isFalling() {

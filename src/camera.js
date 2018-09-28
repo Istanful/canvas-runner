@@ -35,7 +35,7 @@ class Camera extends GameObject {
     return new Vector(
       this.drawer.canvas.width / 2 - this.position.x,
       this.drawer.canvas.height - this.position.y -
-        this.subject.body.size.y -
+        this.subject.hitbox.size.y -
         this.offsetY
     )
   }

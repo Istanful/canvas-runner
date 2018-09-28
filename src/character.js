@@ -4,7 +4,8 @@ class Character extends GameObject {
     this.renderer = new Renderer(this);
     this.animator = new CharacterAnimator(this);
     this.position = new Vector(0, Game.drawer.canvas.height - 100);
-    this.body = new Body(this, new Vector(30, 40));
+    this.body = new Body(this);
+    this.hitbox = new Hitbox(this, new Vector(30, 40));
   }
 
   update(deltaTime) {
@@ -29,15 +30,19 @@ class Character extends GameObject {
   land(collision) {
     this.body.velocity.y = 0;
     const otherCorner = collision.otherHitbox.topLeftCorner;
-    this.position.y = otherCorner.y - this.body.size.y
+    this.position.y = otherCorner.y - this.hitbox.size.y
   }
 
   runInto(collision) {
-    this.position.x = collision.otherHitbox.topLeftCorner.x - this.body.size.x
+    this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
+  }
+
+  get collisions() {
+    return this.hitbox.collisions;
   }
 
   handleCollision() {
-    this.body.collisions.forEach((collision) => {
+    this.collisions.forEach((collision) => {
       switch(collision.location) {
         case 'topRight':
         case 'right':
