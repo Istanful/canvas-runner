@@ -27,6 +27,7 @@
     <script src="src/camera.js"></script>
     <script src="src/canvas.js"></script>
     <script src="src/floor.js"></script>
+    <script src="src/obstacle_generator.js"></script>
   </head>
 
   <body>
@@ -34,12 +35,8 @@
     <script defer>
       const character = new Character('test');
       const mainCamera = new Camera('mainCamera', character);
-      const obstacle = new Obstacle(
-        'box',
-        new Vector(400, 750),
-        new Vector(100, 50)
-      );
       const floor = new Floor();
+      const obstacleGenerator = new ObstacleGenerator();
       KeyboardInput.on(' ', character.jump.bind(character));
       KeyboardInput.subscribe();
 

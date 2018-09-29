@@ -3,7 +3,7 @@ class Camera extends GameObject {
     super(name, subject.position.clone());
     this.drawer = new Drawer('mainCamera');
     this.subject = subject;
-    this.offsetY = 100;
+    this.offsetY = this.drawer.canvas.height / 2;
     this.elasticity = 0.1;
   }
 

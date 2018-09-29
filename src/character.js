@@ -8,7 +8,7 @@ class Character extends GameObject {
 
   update(deltaTime) {
     this.graphic = this.animator.animation.nextValue();
-    this.body.velocity.x = 4;
+    this.body.velocity.x = 6;
     this.body.update(deltaTime);
     this.handleCollision();
     super.update();
@@ -16,7 +16,7 @@ class Character extends GameObject {
 
   jump() {
     if (this.body.isGrounded) {
-      this.body.velocity = new Vector(0, -8.5);
+      this.body.velocity = new Vector(0, -10);
     }
   }
 
