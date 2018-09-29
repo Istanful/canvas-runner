@@ -7,7 +7,6 @@ class Character extends GameObject {
   }
 
   update(deltaTime) {
-    this.lastY = this.position.y;
     this.graphic = this.animator.animation.nextValue();
     this.body.velocity.x = 4;
     this.body.update(deltaTime);
@@ -17,7 +16,7 @@ class Character extends GameObject {
 
   jump() {
     if (this.body.isGrounded) {
-      this.body.velocity = new Vector(0, -8);
+      this.body.velocity = new Vector(0, -8.5);
     }
   }
 
@@ -38,21 +37,33 @@ class Character extends GameObject {
   handleCollision() {
     this.collisions.forEach((collision) => {
       switch(collision.location) {
-        case 'topRight':
         case 'right':
           this.runInto(collision);
           break;
-        case 'bottomRight':
         case 'topRight':
-          if (!this.body.isFalling) {
-            this.runInto(collision);
-          }
-        case 'bottom':
+          this.runInto(collision)
+          break;
         case 'bottomRight':
-        case 'bottomLeft':
-          if (this.body.isFalling) {
+          if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y <=
+              collision.otherHitbox.topLeftCorner.y)
             this.land(collision);
-          }
+          else if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y >
+                   collision.otherHitbox.topLeftCorner.y)
+            this.runInto(collision);
+          else
+            debugger;
+          break;
+        case 'bottomLeft':
+          if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y <=
+              collision.otherHitbox.bottomRightCorner.y)
+            this.land(collision);
+          else if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y >
+                   collision.otherHitbox.bottomRightCorner.y)
+            this.runInto(collision);
+          break;
+        case 'bottom':
+          this.land(collision);
+          break;
       }
     })
   }
