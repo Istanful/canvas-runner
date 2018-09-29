@@ -14,4 +14,10 @@ class GameObject {
   instantiate() {
     Game.gameObjects.push(this);
   }
+
+  destroy() {
+    Game.gameObjects = Game.gameObjects.filter((gameObject) => {
+      return !Object.is(this, gameObject);
+    });
+  }
 }

@@ -8,15 +8,18 @@ class Character extends GameObject {
 
   update(deltaTime) {
     this.graphic = this.animator.animation.nextValue();
-    this.body.velocity.x = 6;
+    this.body.velocity.x = Character.velocityX;
     this.body.update(deltaTime);
     this.handleCollision();
+    this.handleRopeInteraction();
     super.update();
   }
 
   jump() {
     if (this.body.isGrounded) {
       this.body.velocity = new Vector(0, -10);
+    } else if (!this.rope) {
+      this.rope = new Rope(this);
     }
   }
 
@@ -30,6 +33,16 @@ class Character extends GameObject {
     this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
   }
 
+  handleRopeInteraction() {
+    if (this.rope && this.rope.stillAttached) {
+      this.position.y = this.rope.jointPosition.y + this.rope.endPosition.y;
+    } else if (this.rope) {
+      this.body.velocity.y = 0;
+      this.rope.destroy();
+      this.rope = null;
+    }
+  }
+
   get collisions() {
     return this.hitbox.collisions;
   }
@@ -38,8 +51,6 @@ class Character extends GameObject {
     this.collisions.forEach((collision) => {
       switch(collision.location) {
         case 'right':
-          this.runInto(collision);
-          break;
         case 'topRight':
           this.runInto(collision)
           break;
@@ -68,3 +79,4 @@ class Character extends GameObject {
     })
   }
 }
+Character.velocityX = 6;

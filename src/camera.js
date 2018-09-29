@@ -1,9 +1,15 @@
 class Camera extends GameObject {
   constructor(name, subject) {
-    super(name, subject.position.clone());
+    super(name);
     this.drawer = new Drawer('mainCamera');
     this.subject = subject;
     this.offsetY = this.drawer.canvas.height / 2;
+    this.position = this.subject.position.subtract(
+      new Vector(
+        this.drawer.canvas.width / 2,
+        this.drawer.canvas.height / 2
+      )
+    );
     this.elasticity = 0.1;
   }
 
@@ -30,7 +36,8 @@ class Camera extends GameObject {
   }
 
   get nextX() {
-    return this.subject.position.x - this.drawer.canvas.width / 2;
+    return this.position.x +
+           Character.velocityX;
   }
 
   get nextY() {
