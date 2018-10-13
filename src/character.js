@@ -37,28 +37,60 @@ class Character extends GameObject {
   handleCollision() {
     this.collisions.forEach((collision) => {
       switch(collision.location) {
-        case 'right':
+        case 'bottom':
+          this.position.y = collision.otherHitbox.topLeftCorner.y - this.hitbox.size.y
+          this.body.velocity.y = 0;
+          break;
         case 'topRight':
-          this.runInto(collision)
+          if (this.hitbox.topRightCorner.subtract(this.body.velocity).y >=
+            collision.otherHitbox.bottomLeftCorner.y) {
+            this.position.y = collision.otherHitbox.bottomLeftCorner.y
+            this.body.velocity.y = 0;
+          }
+          else if (this.hitbox.topRightCorner.subtract(this.body.velocity).y <
+            collision.otherHitbox.bottomLeftCorner.y) {
+            this.position.x = collision.otherHitbox.bottomLeftCorner.x - this.hitbox.size.x
+            this.body.velocity.x = 0;
+          }
+          break;
+        case 'topLeft':
+          if (this.hitbox.topLeftCorner.subtract(this.body.velocity).y >=
+            collision.otherHitbox.bottomRightCorner.y) {
+            this.position.y = collision.otherHitbox.bottomRightCorner.y
+            this.body.velocity.y = 0;
+          }
+          else if (this.hitbox.topLeftCorner.subtract(this.body.velocity).y <
+            collision.otherHitbox.bottomRightCorner.y) {
+            this.position.x = collision.otherHitbox.bottomRightCorner.x - this.hitbox.size.x
+            this.body.velocity.x = 0;
+          }
           break;
         case 'bottomRight':
           if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y <=
-              collision.otherHitbox.topLeftCorner.y)
-            this.land(collision);
+            collision.otherHitbox.topLeftCorner.y) {
+            this.position.y = collision.otherHitbox.topLeftCorner.y - this.hitbox.size.y
+            this.body.velocity.y = 0;
+          }
           else if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y >
-                   collision.otherHitbox.topLeftCorner.y)
-            this.runInto(collision);
+            collision.otherHitbox.topLeftCorner.y) {
+            this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
+            this.body.velocity.x = 0;
+          }
           break;
         case 'bottomLeft':
           if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y <=
-              collision.otherHitbox.bottomRightCorner.y)
-            this.land(collision);
+            collision.otherHitbox.bottomRightCorner.y) {
+            this.position.y = collision.otherHitbox.topLeftCorner.y - this.hitbox.size.y
+          }
           else if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y >
-                   collision.otherHitbox.bottomRightCorner.y)
-            this.runInto(collision);
+            collision.otherHitbox.bottomRightCorner.y) {
+            this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
+            this.body.velocity.x = 0;
+          }
           break;
-        case 'bottom':
-          this.land(collision);
+        case 'top':
+          this.position.y = collision.otherHitbox.bottomLeftCorner.y;
+          this.body.velocity.y = 0;
           break;
       }
     })
