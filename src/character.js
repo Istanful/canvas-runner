@@ -48,8 +48,6 @@ class Character extends GameObject {
           else if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y >
                    collision.otherHitbox.topLeftCorner.y)
             this.runInto(collision);
-          else
-            debugger;
           break;
         case 'bottomLeft':
           if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y <=

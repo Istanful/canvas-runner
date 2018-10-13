@@ -4,7 +4,7 @@ class ObstacleGenerator extends GameObject {
     this.delay = delay;
     this.obstacleSize = new Vector(300, 50);
     this.obstacles = [];
-    this.nextObstaclePosition = new Vector(mainCamera.drawer.canvas.width
+    this.nextObstaclePosition = new Vector(Game.mainCamera.drawer.canvas.width
       / 2 + this.obstacleSize.x, 750);
   }
 
@@ -27,8 +27,8 @@ class ObstacleGenerator extends GameObject {
 
   get notEnoughObstacles() {
     return this.obstacles.length == 0 ||
-      character.position.x > (this.lastObstaclePosition.x -
-      mainCamera.drawer.canvas.width);
+      Game.character.position.x > (this.lastObstaclePosition.x -
+      Game.mainCamera.drawer.canvas.width);
   }
 
   incrementNextObstaclePosition() {

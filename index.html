@@ -38,17 +38,7 @@
     <h1 id="score"></h1>
     <canvas id="mainCamera" width="800px" height="450" style="border: 2px solid black;"></canvas>
     <script defer>
-      const character = new Character('test');
-      const mainCamera = new Camera('mainCamera', character);
-      const floor = new Floor();
-      const obstacleGenerator = new ObstacleGenerator();
-      KeyboardInput.on(' ', character.jump.bind(character));
-      KeyboardInput.subscribe();
-
-      setInterval(() => {
-        ScoreBoard.update();
-        Game.update();
-      }, 16)
+      Game.start();
     </script>
   </body>
 </html>
