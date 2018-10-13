@@ -11,15 +11,12 @@ class Character extends GameObject {
     this.body.velocity.x = Character.velocityX;
     this.body.update(deltaTime);
     this.handleCollision();
-    this.handleRopeInteraction();
     super.update();
   }
 
   jump() {
     if (this.body.isGrounded) {
       this.body.velocity = new Vector(0, -10);
-    } else if (!this.rope) {
-      this.rope = new Rope(this);
     }
   }
 
@@ -31,16 +28,6 @@ class Character extends GameObject {
 
   runInto(collision) {
     this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
-  }
-
-  handleRopeInteraction() {
-    if (this.rope && this.rope.stillAttached) {
-      this.position.y = this.rope.jointPosition.y + this.rope.endPosition.y;
-    } else if (this.rope) {
-      this.body.velocity.y = 0;
-      this.rope.destroy();
-      this.rope = null;
-    }
   }
 
   get collisions() {
