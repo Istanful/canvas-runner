@@ -36,62 +36,60 @@ class Character extends GameObject {
 
   handleCollision() {
     this.collisions.forEach((collision) => {
-      switch(collision.location) {
-        case 'bottom':
-          this.position.y = collision.otherHitbox.topLeftCorner.y - this.hitbox.size.y
-          this.body.velocity.y = 0;
-          break;
-        case 'topRight':
-          if (this.hitbox.topRightCorner.subtract(this.body.velocity).y >=
-            collision.otherHitbox.bottomLeftCorner.y) {
-            this.position.y = collision.otherHitbox.bottomLeftCorner.y
+      if (collision.collidingCorners.length > 1) {
+        switch(collision.location) {
+          case 'top':
+            this.position.y = collision.otherHitbox.bottomLeftCorner.y;
             this.body.velocity.y = 0;
-          }
-          else if (this.hitbox.topRightCorner.subtract(this.body.velocity).y <
-            collision.otherHitbox.bottomLeftCorner.y) {
-            this.position.x = collision.otherHitbox.bottomLeftCorner.x - this.hitbox.size.x
-            this.body.velocity.x = 0;
-          }
-          break;
-        case 'topLeft':
-          if (this.hitbox.topLeftCorner.subtract(this.body.velocity).y >=
-            collision.otherHitbox.bottomRightCorner.y) {
-            this.position.y = collision.otherHitbox.bottomRightCorner.y
-            this.body.velocity.y = 0;
-          }
-          else if (this.hitbox.topLeftCorner.subtract(this.body.velocity).y <
-            collision.otherHitbox.bottomRightCorner.y) {
-            this.position.x = collision.otherHitbox.bottomRightCorner.x - this.hitbox.size.x
-            this.body.velocity.x = 0;
-          }
-          break;
-        case 'bottomRight':
-          if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y <=
-            collision.otherHitbox.topLeftCorner.y) {
+            break;
+          case 'bottom':
             this.position.y = collision.otherHitbox.topLeftCorner.y - this.hitbox.size.y
             this.body.velocity.y = 0;
-          }
-          else if (this.hitbox.bottomRightCorner.subtract(this.body.velocity).y >
-            collision.otherHitbox.topLeftCorner.y) {
-            this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
+            break;
+          case 'left':
+            this.position.x = collision.otherHitbox.bottomLeftCorner.x;
             this.body.velocity.x = 0;
-          }
-          break;
-        case 'bottomLeft':
-          if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y <=
-            collision.otherHitbox.bottomRightCorner.y) {
-            this.position.y = collision.otherHitbox.topLeftCorner.y - this.hitbox.size.y
-          }
-          else if (this.hitbox.bottomLeftCorner.subtract(this.body.velocity).y >
-            collision.otherHitbox.bottomRightCorner.y) {
-            this.position.x = collision.otherHitbox.topLeftCorner.x - this.hitbox.size.x
+            break;
+          case 'right':
+            this.position.x = collision.otherHitbox.bottomLeftCorner.x - this.hitbox.size.x;
             this.body.velocity.x = 0;
-          }
-          break;
-        case 'top':
-          this.position.y = collision.otherHitbox.bottomLeftCorner.y;
-          this.body.velocity.y = 0;
-          break;
+            break;
+        }
+      } else if (collision.collidingCorners.length == 1){
+        const corner = this.hitbox[`${collision.location}Corner`];
+        const previousCornerLocation = corner.subtract(this.body.velocity);
+        const cornerMap = {
+          'topRight': 'bottomLeft',
+          'topLeft': 'bottomRight',
+          'bottomRight': 'topLeft',
+          'bottomLeft': 'topRight'
+        }
+        const otherCorner = collision.otherHitbox[`${cornerMap[collision.location]}Corner`];
+
+        switch(collision.location) {
+          case 'topRight':
+          case 'topLeft':
+            if (previousCornerLocation.y >= otherCorner.y) {
+              this.position.y = otherCorner.y
+              this.body.velocity.y = 0;
+            }
+            else if (previousCornerLocation.y < otherCorner.y) {
+              this.position.x = otherCorner.x - this.hitbox.size.x
+              this.body.velocity.x = 0;
+            }
+            break;
+          case 'bottomRight':
+          case 'bottomLeft':
+            if (previousCornerLocation.y <= otherCorner.y) {
+              this.position.y = otherCorner.y - this.hitbox.size.y
+              this.body.velocity.y = 0;
+            }
+            else if (previousCornerLocation.y > otherCorner.y) {
+              this.position.x = otherCorner.x - this.hitbox.size.x
+              this.body.velocity.x = 0;
+            }
+            break;
+        }
       }
     })
   }
